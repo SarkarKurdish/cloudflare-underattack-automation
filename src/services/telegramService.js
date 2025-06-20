@@ -70,7 +70,10 @@ class TelegramService {
           `*CPU Usage:* ${data.cpuUsage}%\n` +
           `*Cooldown Period:* ${data.duration.toFixed(1)}s\n` +
           `*Time:* ${timestamp}\n\n` +
-          `Cloudflare security level restored to "${config.cloudflare.defaultSecurityLevel}".`
+          `Cloudflare security level restored to "${config.cloudflare.defaultSecurityLevel.replace(
+            /_/g,
+            " "
+          )}".`
         );
 
       case "status_update":
@@ -99,12 +102,15 @@ class TelegramService {
         return (
           `${statusEmoji} *VPS Monitor Started* ${statusEmoji}\n\n` +
           `*Server:* ${serverName}\n` +
-          `*Current Cloudflare Level:* ${currentLevel.toUpperCase()}\n` +
+          `*Current Cloudflare Level:* ${currentLevel.replace(/_/g, " ")}\n` +
           `*Status:* ${statusText}\n` +
           `*CPU Threshold:* ${config.monitoring.cpuThreshold}%\n` +
           `*High CPU Duration:* ${config.monitoring.highCpuDuration}s\n` +
           `*Cooldown Period:* ${config.monitoring.cooldownPeriod}s\n` +
-          `*Default Security Level:* ${config.cloudflare.defaultSecurityLevel}\n` +
+          `*Default Security Level:* ${config.cloudflare.defaultSecurityLevel.replace(
+            /_/g,
+            " "
+          )}\n` +
           `*Monitoring Interval:* ${config.monitoring.monitoringInterval}s\n` +
           `*Time:* ${timestamp}`
         );
