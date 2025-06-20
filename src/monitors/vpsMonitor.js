@@ -116,7 +116,7 @@ class VpsMonitor {
   async handleUnderAttackDisable(cpuUsage, duration) {
     try {
       logger.info(
-        `Disabling Under Attack mode - CPU: ${cpuUsage}%, Cooldown: ${duration}s`
+        `Disabling Under Attack mode - CPU: ${cpuUsage}%, Normal CPU Cooldown: ${duration}s`
       );
 
       // Disable Cloudflare Under Attack mode
@@ -199,6 +199,7 @@ class VpsMonitor {
         cpuThreshold: config.monitoring.cpuThreshold,
         highCpuDuration: config.monitoring.highCpuDuration,
         cooldownPeriod: config.monitoring.cooldownPeriod,
+        normalCpuCooldown: config.monitoring.normalCpuCooldown,
         monitoringInterval: config.monitoring.monitoringInterval,
         defaultSecurityLevel: config.cloudflare.defaultSecurityLevel,
       },

@@ -6,7 +6,7 @@ A Node.js application that continuously monitors VPS CPU usage and automatically
 
 - **Real-time CPU Monitoring**: Uses `systeminformation` to track CPU usage
 - **Automatic Cloudflare Protection**: Sets security level to "Under Attack" when CPU > 80% for 15+ seconds
-- **Smart Recovery**: Restores security level to configurable default after cooldown period
+- **Smart Recovery**: Restores security level to configurable default after extended cooldown period
 - **State Synchronization**: Checks current Cloudflare security level on startup and syncs app state
 - **Telegram Notifications**: Sends formatted notifications for all status changes
 - **Modular Architecture**: Clean, extensible code structure
@@ -60,6 +60,7 @@ TELEGRAM_CHAT_ID=your_telegram_chat_id_here
 CPU_THRESHOLD=80
 HIGH_CPU_DURATION=15
 COOLDOWN_PERIOD=60
+NORMAL_CPU_COOLDOWN=300
 MONITORING_INTERVAL=5
 
 # Logging Configuration
@@ -75,11 +76,21 @@ LOG_FILE_PATH=./logs/monitor.log
 | `CPU_THRESHOLD`                     | 80                 | CPU percentage threshold to trigger protection             |
 | `HIGH_CPU_DURATION`                 | 15                 | Seconds of high CPU before enabling Under Attack mode      |
 | `COOLDOWN_PERIOD`                   | 60                 | Seconds of normal CPU before disabling Under Attack mode   |
+| `NORMAL_CPU_COOLDOWN`               | 300                | Extended cooldown period after CPU returns to normal       |
 | `MONITORING_INTERVAL`               | 5                  | Seconds between CPU checks                                 |
 | `CLOUDFLARE_DEFAULT_SECURITY_LEVEL` | medium             | Security level to restore when disabling Under Attack mode |
 | `LOG_LEVEL`                         | info               | Logging level (error, warn, info, debug)                   |
 | `LOG_TO_FILE`                       | true               | Enable file logging                                        |
 | `LOG_FILE_PATH`                     | ./logs/monitor.log | Path to log file                                           |
+
+### Cooldown Periods Explained
+
+The application uses two different cooldown periods:
+
+1. **`COOLDOWN_PERIOD` (60s)**: Legacy setting, kept for backward compatibility
+2. **`NORMAL_CPU_COOLDOWN` (300s)**: **Active setting** - How long to wait after CPU returns to normal before disabling Under Attack mode
+
+**Why the extended cooldown?** This prevents rapid on/off cycling of Under Attack mode during intermittent attacks or CPU spikes.
 
 ### Cloudflare Security Levels
 
@@ -145,6 +156,7 @@ npm run dev
   cpuThreshold: 80,
   highCpuDuration: 15,
   cooldownPeriod: 60,
+  normalCpuCooldown: 300,
   monitoringInterval: 5,
   defaultSecurityLevel: 'medium'
 }
@@ -214,7 +226,7 @@ vps-cpu-monitor/
    - Enable Cloudflare "Under Attack" mode
    - Send Telegram notification
 4. **Recovery**: When CPU returns to normal:
-   - Wait 60 seconds (cooldown period)
+   - Wait 300 seconds (normal CPU cooldown period)
    - Disable "Under Attack" mode
    - Restore to configured default security level
    - Send Telegram notification
@@ -224,6 +236,7 @@ vps-cpu-monitor/
 - **Environment Variables**: All sensitive data stored in `.env`
 - **API Token Security**: Cloudflare tokens with minimal required permissions
 - **State Synchronization**: App state matches Cloudflare state on startup
+- **Extended Cooldown**: Prevents rapid cycling of Under Attack mode
 - **Error Handling**: Comprehensive error catching and logging
 - **Retry Logic**: Automatic retry for failed API calls
 - **Graceful Shutdown**: Proper cleanup on application termination
@@ -266,9 +279,15 @@ vps-cpu-monitor/
    - Review log files for errors
 
 4. **State Synchronization Issues**:
+
    - Check Cloudflare API connectivity
    - Verify security level values are valid
    - Review startup logs for state initialization
+
+5. **Cooldown Issues**:
+   - Check `NORMAL_CPU_COOLDOWN` setting
+   - Verify the extended cooldown is working as expected
+   - Review logs for cooldown timing
 
 ### Log Files
 
@@ -279,6 +298,7 @@ Logs are stored in `./logs/monitor.log` with detailed information about:
 - Error details
 - Status changes
 - State synchronization
+- Cooldown periods
 
 ## 📝 License
 

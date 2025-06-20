@@ -74,17 +74,17 @@ class CpuMonitor {
           if (!this.normalCpuStartTime) {
             this.normalCpuStartTime = now;
             logger.info(
-              `CPU normal. Starting cooldown period of ${config.monitoring.cooldownPeriod} seconds...`
+              `CPU normal. Starting normal CPU cooldown period of ${config.monitoring.normalCpuCooldown} seconds...`
             );
           }
 
           const normalCpuDuration = (now - this.normalCpuStartTime) / 1000;
 
-          if (normalCpuDuration >= config.monitoring.cooldownPeriod) {
+          if (normalCpuDuration >= config.monitoring.normalCpuCooldown) {
             this.isUnderAttack = false;
             this.normalCpuStartTime = null;
             logger.info(
-              `Cooldown period completed. Disabling Under Attack mode.`
+              `Normal CPU cooldown period completed (${config.monitoring.normalCpuCooldown}s). Disabling Under Attack mode.`
             );
             return {
               status: "normal",

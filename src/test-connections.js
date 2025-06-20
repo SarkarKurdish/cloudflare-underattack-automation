@@ -55,6 +55,9 @@ async function testConnections() {
     console.log(`   High CPU Duration: ${config.monitoring.highCpuDuration}s`);
     console.log(`   Cooldown Period: ${config.monitoring.cooldownPeriod}s`);
     console.log(
+      `   Normal CPU Cooldown: ${config.monitoring.normalCpuCooldown}s`
+    );
+    console.log(
       `   Monitoring Interval: ${config.monitoring.monitoringInterval}s`
     );
     console.log(

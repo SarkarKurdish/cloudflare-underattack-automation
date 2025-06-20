@@ -44,6 +44,7 @@ class Config {
       cpuThreshold: parseInt(process.env.CPU_THRESHOLD) || 80,
       highCpuDuration: parseInt(process.env.HIGH_CPU_DURATION) || 15,
       cooldownPeriod: parseInt(process.env.COOLDOWN_PERIOD) || 60,
+      normalCpuCooldown: parseInt(process.env.NORMAL_CPU_COOLDOWN) || 300,
       monitoringInterval: parseInt(process.env.MONITORING_INTERVAL) || 5,
     };
   }

@@ -68,7 +68,7 @@ class TelegramService {
           `✅ *VPS UNDER ATTACK MODE DISABLED* ✅\n\n` +
           `*Server:* ${serverName}\n` +
           `*CPU Usage:* ${data.cpuUsage}%\n` +
-          `*Cooldown Period:* ${data.duration.toFixed(1)}s\n` +
+          `*Normal CPU Cooldown:* ${data.duration.toFixed(1)}s\n` +
           `*Time:* ${timestamp}\n\n` +
           `Cloudflare security level restored to "${config.cloudflare.defaultSecurityLevel.replace(
             /_/g,
@@ -106,7 +106,7 @@ class TelegramService {
           `*Status:* ${statusText}\n` +
           `*CPU Threshold:* ${config.monitoring.cpuThreshold}%\n` +
           `*High CPU Duration:* ${config.monitoring.highCpuDuration}s\n` +
-          `*Cooldown Period:* ${config.monitoring.cooldownPeriod}s\n` +
+          `*Normal CPU Cooldown:* ${config.monitoring.normalCpuCooldown}s\n` +
           `*Default Security Level:* ${config.cloudflare.defaultSecurityLevel.replace(
             /_/g,
             " "

@@ -56,9 +56,16 @@ npm start
 3. **Triggers Protection** when CPU > 80% for 15+ seconds
 4. **Enables Cloudflare "Under Attack"** mode
 5. **Sends Telegram Alert** with details
-6. **Recovers** after 60 seconds of normal CPU
+6. **Recovers** after 300 seconds (5 minutes) of normal CPU
 7. **Disables Protection** and restores to configured default level
 8. **Sends Recovery Notification**
+
+## 🕐 Cooldown Periods
+
+- **High CPU Duration**: 15 seconds of high CPU before enabling Under Attack mode
+- **Normal CPU Cooldown**: 300 seconds (5 minutes) of normal CPU before disabling Under Attack mode
+
+**Why 5 minutes?** This prevents rapid on/off cycling during intermittent attacks or CPU spikes.
 
 ## 🛠️ Commands
 
@@ -78,6 +85,7 @@ TELEGRAM_CHAT_ID=your_chat_id_here
 CPU_THRESHOLD=80
 HIGH_CPU_DURATION=15
 COOLDOWN_PERIOD=60
+NORMAL_CPU_COOLDOWN=300
 MONITORING_INTERVAL=5
 ```
 
